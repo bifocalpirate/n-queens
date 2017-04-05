@@ -2,7 +2,7 @@ var Cell = function(row, col) {
 
     this.Column = col;
     this.Row = row;
-    this.cellType = _NEUTRAL;
+    this.cellType = 0;
     this.wallT = true;
     this.wallR = true;
     this.wallB = true;
@@ -94,22 +94,8 @@ var Cell = function(row, col) {
         return result;
     }
 
-    this.getCellColour = function() {
-        switch (this.cellType) {
-            case _NEUTRAL:
-                return '#cc6699';
-            case _VISITED:
-                return '#FFB533';
-            case _CURRENT:
-                return '#E3FF33'; //#ff0000'; 
-            case _OBSTACLE:
-                return 'black';
-            case _START:
-                return 'red';
-            case _END:
-                return 'red';
-            default:
+    this.getCellColour = function() {        
                 return '#ffffe6';
-        }
+        
     }
 }
