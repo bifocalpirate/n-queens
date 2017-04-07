@@ -1,6 +1,6 @@
 /* configs */
-var CANVAS_SIZE = 500;
-var CELL_WIDTH = 20;
+var CANVAS_SIZE = 600;
+var CELL_WIDTH = 40;
 var ROW_COUNT = CANVAS_SIZE / CELL_WIDTH;
 var FRAME_RATE = 60;
 
@@ -15,18 +15,20 @@ function setup() {
         for (var j = 0; j < ROW_COUNT; j++) {
             grid.push(new Cell(i, j));
         }
-    }
+    }    
+    //frameRate(FRAME_RATE);                                          
     noLoop();
-    frameRate(FRAME_RATE);                                          
-    var j = new NQueensSolver(ROW_COUNT);   
+    var j = new NQueensSolver(ROW_COUNT,grid);   
     if (j.solve(0))
     {
         console.log('Solution found.');
-        j.printGrid();
+        console.log(j.getGridText());
+        console.log(grid);
     }
     else{
         console.log('No solution.');        
     }
+    
 }
 
 function keyPressed() {
@@ -40,6 +42,6 @@ function draw() {
     }
     noFill();
     strokeWeight(3);
-    stroke('blue');
+    stroke('#333399');
     rect(0, 0, CANVAS_SIZE-1, CANVAS_SIZE-1);
 }

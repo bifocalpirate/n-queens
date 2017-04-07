@@ -1,31 +1,30 @@
 class NQueensSolver{
-    constructor(n){
+    constructor(n,g){
         this.n = n;
-        this.grid = [];
-        for(var i=0;i < n*n; i++){
-            this.grid.push(false);
-        }        
+        if (!g)        
+            {
+                console.error('Must pass in a grid.');
+                return;
+            }
+        this.grid = g;                                       
     }
+
     setQueenAt(row,col,on){      
-        this.grid[this.getIndex(row,col)]=on;
-    }
-    grid(){
-            return this.grid;
-    }
-    printGrid(){
-        //console.log(this.grid);
+        this.grid[this.getIndex(row,col)].setValue(on);
+    }   
+
+    getGridText(){        
         var i=0;        
         var r = "";        
         this.grid.forEach((c)=>{
-            r = r + (c?"@":"x");
+            r = r + (c.getValue()?"@":"x");
             if (i <this.n-1)                            
                 i++;            
             else{                      
                 r += "\n";
                 i=0; 
             }           
-        });
-        console.log(r);
+        });        
         return r;
     }
    
@@ -35,16 +34,8 @@ class NQueensSolver{
         }
         return col + row * this.n;
     }
-    getQueenRow(col){
-        for(var t=0; t < this.n; t++)
-        {
-            if (this.grid[this.getIndex(t,col)])
-                return t;
-        }
-        return -1;
-    }
-    solve(j){
-        
+
+    solve(j){        
         if (this.n==j) //check on column (n)
         {                        
             return true;
@@ -53,11 +44,11 @@ class NQueensSolver{
                 for(var row=0; row < this.n; row++){                         
                     if (this.isValidPosition(row,j))
                     {
-                        this.setQueenAt(row,j,true);                                            
-                        //this.printGrid();                        
+                        this.setQueenAt(row,j,true);                                                                 
                         if (this.solve(j+1))                        
                             return true;                        
-                        this.setQueenAt(row,j,false);
+                        this.setQueenAt(row,j,false);//roll back previous check                        
+
                     }                          
                 }                
         }
@@ -66,19 +57,20 @@ class NQueensSolver{
     isValidPosition(row,col){                
           for(var d=0; d < this.n; d++){ //check row OK                                                                   
 
-              if (this.grid[this.getIndex(row,d)]) //check left/right                               
+              if (this.grid[this.getIndex(row,d)].getValue()) //check left/right                               
                  return false; //OK
               
               ///////////////////////////////////////////////////////////////////////
-              if (this.grid[this.getIndex(d,col)]) //check up down              
+              if (this.grid[this.getIndex(d,col)].getValue()) //check up down              
                  return false; //OK              
               
               ///////////////////////////////////////////////////////////////////////
-            if (this.grid[this.getIndex(row-d,col-d)] || this.grid[this.getIndex(row-d,col+d)])            
-                return false; //OK
             
-            if (this.grid[this.getIndex(row+d,col-d)] || this.grid[this.getIndex(row+d,col+d)])
-                return false; //OK
+            if ( (row-d>=0 && col-d>=0 && this.grid[this.getIndex(row-d,col-d)].getValue()) || (row-d>=0 && col+d<this.n && this.grid[this.getIndex(row-d,col+d)].getValue()))
+                    return false; //OK
+            
+                if ((row+d<this.n && col-d>=0&& this.grid[this.getIndex(row+d,col-d)].getValue()) || (row+d<this.n && col+d<this.n && this.grid[this.getIndex(row+d,col+d)].getValue()))
+                  return false; //OK
               ///////////////////////////////////////////////////////////////////////
           }                             
         return true;
