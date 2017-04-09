@@ -58,20 +58,16 @@ class NQueensSolver{
           for(var d=0; d < this.n; d++){ //check row OK                                                                   
 
               if (this.grid[this.getIndex(row,d)].getValue()) //check left/right                               
-                 return false; //OK
-              
-              ///////////////////////////////////////////////////////////////////////
-              if (this.grid[this.getIndex(d,col)].getValue()) //check up down              
                  return false; //OK              
               
-              ///////////////////////////////////////////////////////////////////////
+              if (this.grid[this.getIndex(d,col)].getValue()) //check up down              
+                 return false; //OK                                          
             
             if ( (row-d>=0 && col-d>=0 && this.grid[this.getIndex(row-d,col-d)].getValue()) || (row-d>=0 && col+d<this.n && this.grid[this.getIndex(row-d,col+d)].getValue()))
                     return false; //OK
             
                 if ((row+d<this.n && col-d>=0&& this.grid[this.getIndex(row+d,col-d)].getValue()) || (row+d<this.n && col+d<this.n && this.grid[this.getIndex(row+d,col+d)].getValue()))
-                  return false; //OK
-              ///////////////////////////////////////////////////////////////////////
+                  return false; //OK              
           }                             
         return true;
     }
