@@ -10,7 +10,7 @@ var controlPanel = null;
 function workSetup(){
 
     grid = [];
-    createCanvas(CANVAS_SIZE,CANVAS_SIZE);
+    resizeCanvas(CANVAS_SIZE,CANVAS_SIZE);
     CELL_WIDTH = CANVAS_SIZE/ROW_COUNT;
     
     for (var i = 0; i < ROW_COUNT; i++) {
